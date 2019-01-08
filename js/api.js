@@ -138,7 +138,7 @@ var getSavedArticles = () => {
       var description = article.post_content.substring(0,100);
       articlesHTML += `
                   <div class="card">
-                    <a href="./article.html?id=${article.ID}">
+                    <a href="./article.html?id=${article.ID}&saved=true">
                       <div class="card-image waves-effect waves-block waves-light">
                         <img src="${article.cover}" />
                       </div>
@@ -153,4 +153,40 @@ var getSavedArticles = () => {
     // Sisipkan komponen card ke dalam elemen dengan id #body-content
     document.getElementById("body-content").innerHTML = articlesHTML;
   })
+}
+
+function getSavedArticleById() {
+  var urlParams = new URLSearchParams(window.location.search);
+  var idParam = urlParams.get("id");
+  
+  getById(idParam).then(function(article) {
+    articleHTML = '';
+    var articleHTML = `
+    <div class="card">
+      <div class="card-image waves-effect waves-block waves-light">
+        <img src="${article.cover}" />
+      </div>
+      <div class="card-content">
+        <span class="card-title">${article.post_title}</span>
+        ${snarkdown(article.post_content)}
+      </div>
+    </div>
+  `;
+    // Sisipkan komponen card ke dalam elemen dengan id #content
+    document.getElementById("body-content").innerHTML = articleHTML;
+  });
+}
+
+function getById(id) {
+  return new Promise(function(resolve, reject) {
+    dbPromised
+      .then(function(db) {
+        var tx = db.transaction("articles", "readonly");
+        var store = tx.objectStore("articles");
+        return store.get(id);
+      })
+      .then(function(article) {
+        resolve(article);
+      });
+  });
 }

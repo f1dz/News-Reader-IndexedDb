@@ -55,9 +55,20 @@
       }
 
       document.addEventListener('DOMContentLoaded', () => {
-        var item = getArticleById();
-        var save = document.getElementById('save');
-        save.onclick = () => {
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var isFromSaved = urlParams.get('saved');
+
+        var btnSave = document.getElementById('save');
+
+        if(isFromSaved) {
+          btnSave.style.display = 'none';
+          getSavedArticleById();
+        } else {
+          var item = getArticleById();
+        }
+
+        btnSave.onclick = () => {
           
           item.then(article => {
             saveForLater(article)
