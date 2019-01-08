@@ -1,0 +1,16 @@
+{
+  "name": "Ofid PWA",
+  "short_name": "Ofid",
+  "description": "Aplikasi PWA pertama saya",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#00897B",
+  "theme_color": "#00897B",
+  "icons": [
+      {
+          "src": "logo.png",
+          "sizes": "512x512",
+          "type": "image/png"
+      }
+  ]
+}
