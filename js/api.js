@@ -128,3 +128,29 @@ var getArticleById = () => {
     })
   })
 }
+
+var getSavedArticles = () => {
+  getAll().then(articles => {
+    console.log(articles);
+    
+    var articlesHTML = "";
+    articles.forEach(function(article) {
+      var description = article.post_content.substring(0,100);
+      articlesHTML += `
+                  <div class="card">
+                    <a href="./article.html?id=${article.ID}">
+                      <div class="card-image waves-effect waves-block waves-light">
+                        <img src="${article.cover}" />
+                      </div>
+                    </a>
+                    <div class="card-content">
+                      <span class="card-title truncate">${article.post_title}</span>
+                      <p>${description}</p>
+                    </div>
+                  </div>
+                `;
+    });
+    // Sisipkan komponen card ke dalam elemen dengan id #body-content
+    document.getElementById("body-content").innerHTML = articlesHTML;
+  })
+}
