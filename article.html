@@ -24,12 +24,19 @@
     </nav>
     <!-- Akhir Navigasi -->
     <div class="container" id="body-content"></div>
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-large red" id="save">
+        <i class="large material-icons">save</i>
+      </a>
+    </div>
     <script
       type="text/javascript"
       src="https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js"
     ></script>
     <script src="js/materialize.min.js"></script>
     <script src="js/api.js"></script>
+    <script src="js/idb.js"></script>
+    <script src="js/db.js"></script>
     <script>
       // REGISTER SERVICE WORKER
       if ("serviceWorker" in navigator) {
@@ -48,7 +55,14 @@
       }
 
       document.addEventListener('DOMContentLoaded', () => {
-        getArticleById();
+        var item = getArticleById();
+        var save = document.getElementById('save');
+        save.onclick = () => {
+          
+          item.then(article => {
+            saveForLater(article)
+          })
+        }
       })
     </script>
   </body>
